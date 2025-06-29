@@ -13,7 +13,7 @@ mongoose.connect(process.env.MONGO_URL)
 .then(()=>console.log("Mongo DB Connected Successfully"))
 .catch((err)=>console.log(err))
 
-const port =4000;
+const port = process.env.PORT || 4000;
 app.use(bodyParser.json());
 app.use('/vendor',vendorRoutes);
 app.use('/firm',firmRoutes);
@@ -26,5 +26,5 @@ app.listen(port,()=>{
 })
 
 app.get('/',(req,res)=>{
-    res.send("CHANDU.JANIPIREDDY")
+    res.send("JANIPIREDY CHANDU")
 })
