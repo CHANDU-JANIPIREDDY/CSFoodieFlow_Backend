@@ -1,14 +1,22 @@
-const express = require("express");
+const express = require('express');
 const dotEnv = require('dotenv');
 const mongoose = require("mongoose");
+const cors = require('cors');
+const path = require('path')
+
 const vendorRoutes = require('./vendors/vendorRoutes');
 const bodyParser = require('body-parser');
 const firmRoutes = require('./vendors/fermRoutes');
 const productRoutes=require('./vendors/productRoutes');
-const path = require('path')
+
+
 
 const app=express()
 dotEnv.config()
+ 
+app.use(cors());
+app.use(express.json());
+
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>console.log("Mongo DB Connected Successfully"))
 .catch((err)=>console.log(err))
