@@ -16,8 +16,9 @@ dotEnv.config()
  
 app.use(cors());
 app.use(express.json());
+console.log("🔍 MONGODB_URI:", process.env.MONGODB_URI);
 
-mongoose.connect(process.env.MONGO_URL)
+mongoose.connect(process.env.MONGODB_URI)
 .then(()=>console.log("Mongo DB Connected Successfully"))
 .catch((err)=>console.log(err))
 

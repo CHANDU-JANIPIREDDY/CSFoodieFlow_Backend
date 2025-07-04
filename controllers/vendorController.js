@@ -51,6 +51,7 @@ const venderLogin = async(req,res)=>{
     }
 }
 
+
 const getAllVendors = async(req,res)=>{
     try {
         const vendors = await Vendor.find().populate('firm');
