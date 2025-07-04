@@ -22,7 +22,6 @@ mongoose.connect(process.env.MONGO_URL)
 .catch((err)=>console.log(err))
 
 const port = process.env.PORT || 4000;
-app.use(bodyParser.json());
 app.use('/vendor',vendorRoutes);
 app.use('/firm',firmRoutes);
 app.use('/product',productRoutes); 

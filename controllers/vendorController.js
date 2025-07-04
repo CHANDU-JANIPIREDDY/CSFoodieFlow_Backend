@@ -25,8 +25,8 @@ const vendorRegister = async(req,res)=>{
         console.log("Vendor Register");
     }
     catch(error){
-        console.log(error);
-        res.status(500).json({error : "Internal Server Error"});
+        console.log("Registration Error:",error);
+        res.status(500).json({error : error.message});
     }
 }
 
