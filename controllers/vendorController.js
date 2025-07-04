@@ -62,21 +62,34 @@ const getAllVendors = async(req,res)=>{
     }
 }
 
-const getVendorById = async(req,res)=>{
+const getVendorById = async (req, res) => {
     const vendorId = req.params.id;
+
     try {
         const vendor = await Vendor.findById(vendorId).populate('firm');
-        if (!vendor){
-            return res.status(404).json({error:"Vendor Not Found"});
+
+        if (!vendor) {
+            return res.status(404).json({ error: "Vendor Not Found" });
         }
-        const vendorFirmId =vendor.firm[0]._id;
-        res.status(200).json({vendorId,vendorFirmId,vendor})
-        console.log(vendor,vendorFirmId);
-        
+
+        let vendorFirmId = null;
+
+        // Safely check and extract firm ID
+        if (Array.isArray(vendor.firm) && vendor.firm.length > 0) {
+            vendorFirmId = vendor.firm[0]._id;
+        } else if (vendor.firm && vendor.firm._id) {
+            vendorFirmId = vendor.firm._id;
+        }
+
+        res.status(200).json({ vendorId, vendorFirmId, vendor });
+        console.log("Vendor:", vendor);
+        console.log("Firm ID:", vendorFirmId);
+
     } catch (error) {
-        console.log(error);
-        res.status(500).json({error:"Internal Server Error"})
+        console.log("Error in getVendorById:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
     }
-}
+};
+
 
 module.exports={vendorRegister,venderLogin,getAllVendors,getVendorById};
