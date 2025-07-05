@@ -6,7 +6,7 @@ const path = require('path')
 
 const vendorRoutes = require('./vendors/vendorRoutes');
 const bodyParser = require('body-parser');
-const firmRoutes = require('./vendors/fermRoutes');
+const firmRoutes = require('./vendors/firmRoutes');
 const productRoutes=require('./vendors/productRoutes');
 
 

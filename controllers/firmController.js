@@ -7,14 +7,10 @@ const path = require('path');
     
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/'); // Folder where files will be saved
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname)); // e.g., 168945123123.jpg
-    }
+    destination: (req, file, cb) => cb(null, 'uploads/'),
+    filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
 });
-const uploads=multer({storage:storage})
+const uploads = multer({ storage });
 
 const addFirm = async(req,res)=>{
     try {
@@ -23,7 +19,7 @@ const addFirm = async(req,res)=>{
 
         const vendor = await Vendor.findById(req.vendorId)
         if(!vendor){
-            res.status(404).json({message:"Vendor Not Found"})
+            return res.status(404).json({message:"Vendor Not Found"})
         }
         if(vendor.firm.length >0){
             return res.status(400).json({message: "vendor can have only one firm"});
@@ -40,9 +36,9 @@ const addFirm = async(req,res)=>{
     return res.status(200).json({message:'Firm Added Successful',firmId})
         
     } catch (error) {
-        console.log(error)
-        res.status(500).json("Internal Server Error")
-    }
+        console.error("AddFirm Error:", error);
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
+        }
 }
 
 const deletedFirmById = async(req,res)=>{
